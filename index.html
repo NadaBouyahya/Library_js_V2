@@ -240,7 +240,7 @@
                 listBooks.push(book);
                 localStorage.setItem("listBooks", JSON.stringify(listBooks));
                 list_temp.push(JSON.parse(localStorage.getItem("listBooks")));
-                
+
                 var tr = table.insertRow(-1);
                 tr.insertCell(0).innerHTML = Title.value;
                 tr.insertCell(1).innerHTML = Author.value;
@@ -306,7 +306,7 @@
                 row.cells[2].innerHTML = Price.value;
                 row.cells[3].innerHTML = pub_date.value;
                 row.cells[4].innerHTML = Languages.value;
-
+                
                 for(var i=0;i<3;i++){
                     if(books_type[i].checked){
                         row.cells[6].innerHTML = books_type[i].value;
