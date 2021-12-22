@@ -1,0 +1,111 @@
+body {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    background-image: url(library.jpg);
+    background-position: top;
+    background-size: cover;
+    background-repeat: no-repeat;
+    justify-content: space-around;
+}
+
+.Main_title{
+    /* padding: 20px; */
+    display: flex;
+    justify-content: center;
+}
+
+.Main_title h1 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 40px;
+    color: white;
+    background-color: rgba(188, 115, 69, 0.39);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+main{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+
+form{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    
+}
+
+input {
+    height: 30px;
+}
+/*label {
+    margin-top: 10px;
+}
+input {
+    margin-top: 10px;
+}
+select{
+    margin-top: 20px;
+}*/
+input {
+    height: 25px;
+    background-color: rgba(255, 255, 255, 0.856);
+    outline: none;
+    border-style: solid;
+    border-width: thin;
+    border-radius: 5px;
+}
+
+select{
+    height: 27px;
+    background-color: rgba(255, 255, 255, 0.856);
+    outline: none;
+    border-style: solid;
+    border-width: thin;
+    border-radius: 5px;
+}
+#subm {
+    width:30%;
+    margin-left:130px;
+}
+
+.the_table {
+    background-color:rgba(188, 115, 69, 0.438);
+    border-radius: 10px;
+}
+table {
+    padding: 20px;
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    font-size: 20px;
+    border-color: black;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    }
+
+    td {
+        border: 2px solid white;
+      }
+
+.radio_type {
+display: flex;
+flex-direction:row;
+justify-content: space-around;
+}
+
+.radio_type label {
+    margin-top: 5px;
+}
+
+FORM {
+    background-color:rgba(188, 115, 69, 0.438);
+    width: 400px;
+    padding: 30px;
+    border-radius: 10px;
+}

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="Main_title">
+        <h1> Book Wood</h1>
+    </div>
+<main>
+<div class="FORM">
+    <form id="validation">
+        <p id="title_msg"></p>
+        <input type="text" placeholder="Title" name="title"> <br> 
+        
+        <p id="author_msg"></p>
+        <input type="text" placeholder="Author Name" name="author"><br>
+         
+        <p id="email_msg"></p>
+        <input type="text" placeholder="Email" name="email">
+
+        <p id="price_msg"></p>
+        <input type="text" placeholder="Price" name="price"><br>
+
+        <p id="date_msg"></p>
+        <input type="date" placeholder="Publishing date" name="date"> <br>
+
+        <p id="language_msg"></p>
+        <select id="language" name="languages">
+            <option disabled selected hidden value>select a language</option>
+            <option value="Arabic">Arabic</option>
+            <option value="English">English</option>
+            <option value="French">French</option>
+        </select> <br>
+
+        <p id="type_msg"></p>
+    <div class="radio_type">
+      <label for="Novel">Novels</label>
+        <input type="radio" name="type" id="Novel" value="Novel">
+
+        <label for="Essay">Essay</label>
+        <input type="radio" name="type" id="Essay" value="Essay">
+
+        <label for="Comics">Comics</label>
+        <input type="radio" name="type" id="comics" value="Comics">
+    </div>
+        <p id="valid_done"></p>
+        <input type="submit" name="validate" value="submit" id="subm">
+    </form>
+</div>
+<div class="the_table">
+    <table id="my_table">
+        <tr>
+            <td>Title</td>
+            <td>Author</td>
+            <td>Email</td>
+            <td>Price</td>
+            <td>Publish Date</td>
+            <td>Language</td>
+            <td>Type</td>
+            <td>Control</td>
+        </tr>
+    </table>
+</div>
+</main>
+    <script>
+        var validation = document.getElementById('validation');
+        var Title = validation.elements["title"];
+        var Author = validation.elements["author"];
+        var Email = validation.elements["email"];
+        var Price = validation.elements["price"];
+        var Languages = validation.elements["language"];
+        var books_type = validation.elements["type"];
+        var pub_date = validation.elements["date"];
+        var table = document.getElementById("my_table"); 
+        var listBooks = [];
+        var list_temp = [];
+
+        class books {
+                constructor(title, author, email, price, date, language, type){
+                    this.title = title
+                    this.author = author
+                    this.email = email
+                    this.price = price
+                    this.date = date
+                    this.language = language
+                    this.type = type
+                }
+                DétailOuvrage(){
+                    return "The work" + title + "is a" + type + "in" + language +"language, written by" + author + "and published on the" + date + ". The price of" +title+ " is" + price+ "Dhs. "
+                }
+            }
+
+        function validate(event) {
+            event.preventDefault();
+            // error message vars
+            var errorTitle = document.getElementById('title_msg');
+            var errorAuthor = document.getElementById('author_msg');
+            var errorEmail = document.getElementById('email_msg');
+            var errorPrice = document.getElementById('price_msg');
+            var errorDate = document.getElementById('date_msg');
+            var errorLang = document.getElementById('language_msg');
+            var errorType = document.getElementById('type_msg');
+
+            //Regex Vars
+            var regEmail = /^(((\w+)(\.)(\w+))|((\w+)))(@)(\w+)(\.)(\w+)$/;
+            var regPrice = /^[0-9]+((\.[0-9]{2})|())$/;
+            
+            
+
+            
+
+            // form validation
+            var form_ok = true;
+
+            //title
+            if (Title.value.length > 30) {
+                form_ok = false;
+                errorTitle.innerHTML = "title too long";
+                errorTitle.style.color = 'red';
+            }
+
+            else if (Title.value == "") {
+                form_ok = false;
+                errorTitle.innerHTML = 'please fill title field';
+                errorTitle.style.color = 'red';
+            }
+            else {
+                errorTitle.innerHTML = "good!";
+                errorTitle.style.color = 'green';
+            }
+
+            //author
+            if (Author.value == "") {
+                form_ok = false;
+                errorAuthor.innerHTML = 'please fill author field';
+                errorAuthor.style.color = 'red';
+            }
+            else if (Author.value.length > 30) {
+                form_ok = false;
+                errorAuthor.innerHTML = 'author name too long';
+                errorAuthor.style.color = 'red';
+            }
+            else {
+                errorAuthor.innerHTML = 'good!';
+                errorAuthor.style.color = 'green';
+            }
+
+            // Email
+        if(Email.value !==""){
+                
+                if (regEmail.test(Email.value)){
+                errorEmail.innerHTML= "yay"
+                errorEmail.style.color = 'green';
+            }
+                else{
+                errorEmail.innerHTML= "nop"
+                errorEmail.style.color = 'red';
+            }
+        
+        }
+        else{
+            errorEmail.innerHTML= "please fill email field"
+            errorEmail.style.color = 'red';
+        }
+
+            //price//
+            if(Price.value !==""){
+                if (regPrice.test(Price.value)){
+                    errorPrice.innerHTML= "Validate"
+                    errorPrice.style.color = "green"
+                }
+
+                else(errorPrice.innerHTML="wrong format !")
+            }
+           else if (Price.value == "") {
+                form_ok = false;
+                errorPrice.innerHTML = 'please fill price field';
+                errorPrice.style.color = 'red';
+            }
+
+            // else if (isNaN(Price.value)) {
+            //     form_ok = false;
+            //     errorPrice.innerHTML = 'please enter a number';
+            //     errorPrice.style.color = 'red';
+            // }
+            // else if (Price.value < 0) {
+            //     form_ok = false;
+            //     errorPrice.innerHTML = 'enter a positive number';
+            //     errorPrice.style.color = 'red';
+            // }
+            // else {
+            //     errorPrice.innerHTML = 'good!';
+            //     errorPrice.style.color = 'green';
+            // }
+
+            //publishing Date
+            if (pub_date.value == "") {
+                form_ok = false;
+                errorDate.innerHTML = 'fill date field';
+                errorDate.style.color = 'red';
+            }
+            else {
+                errorDate.innerHTML = 'good!';
+                errorDate.style.color = 'green';
+            }
+
+            //languages
+            if (Languages.selectedIndex == "") {
+                form_ok = false;
+                errorLang.innerHTML = 'select a language';
+                errorLang.style.color = 'red';
+            }
+            else {
+                errorLang.innerHTML = 'good!'
+                errorLang.style.color = 'green'
+            }
+
+            //type
+            if (!(books_type[0].checked || books_type[1].checked || books_type[2].checked)) {
+                form_ok = false;
+                errorType.innerHTML = 'please select a type';
+                errorType.style.color = 'red';
+            }
+            else {
+                errorType.innerHTML = 'good!';
+                errorType.style.color = 'green';
+            }
+
+            // add rows+cells to table
+            if(form_ok==true){
+                var index = Languages.selectedIndex;
+                var book = new books(Title.value, Author.value, Email.value,Price.value, pub_date.value, Languages.options[index].value, books_type.value)
+                listBooks.push(book);
+                localStorage.setItem("listBooks", JSON.stringify(listBooks));
+                list_temp.push(JSON.parse(localStorage.getItem("listBooks")));
+                
+                var tr = table.insertRow(-1);
+                tr.insertCell(0).innerHTML = Title.value;
+                tr.insertCell(1).innerHTML = Author.value;
+                tr.insertCell(2).innerHTML = Email.value;
+                tr.insertCell(3).innerHTML = Price.value;
+                tr.insertCell(4).innerHTML = pub_date.value;
+                
+                tr.insertCell(5).innerHTML = Languages.options[index].value;
+                tr.insertCell(6).innerHTML = books_type.value;
+                tr.insertCell(7).innerHTML = "<input type='button' class='delete_btn' onclick='delete_row(this)' value='delete'><input type='button' class='edit_btn' onclick='edit_row(this)' value='Edit'>"
+                
+                     // clear form after submit
+                Title.value = "";
+                Author.value = "";
+                Email.value = "";
+                Price.value = "";
+                pub_date.value = "";
+                Languages.value = "";
+            }
+               
+            }
+            var x = document.getElementsByName("type");
+            var i;
+            for (i = 0; i < x.length; i++) {
+            if (x[i].type == "radio") {
+            x[i].checked = false;
+            } }
+         
+        // delete button
+        function delete_row(replace){
+            if(confirm("are you sure ?")){
+            var i = replace.parentNode.parentNode.rowIndex;
+            table.deleteRow(i);
+            }
+       
+        }
+
+        // Edit button
+        function edit_row(replace){
+            var i = replace.parentNode.parentNode.rowIndex;
+            var row = table.rows[i];
+            if(replace.value=="Edit"){
+                Title.value = row.cells[0].innerHTML;
+                Author.value = row.cells[1].innerHTML;
+                Email.value= row.cells[2].innerHTML;
+                Price.value = row.cells[3].innerHTML;
+                pub_date.value = row.cells[4].innerHTML;
+                Languages.value = row.cells[5].innerHTML;
+
+                for(var i=0;i<3;i++){
+                    if(books_type[i].value==row.cells[6].innerHTML){
+                        books_type[i].checked = true;
+                        break;
+                    }
+                }
+                replace.value = "Save";
+                document.getElementById('subm').setAttribute("disabled","true");
+            }
+            else{
+                row.cells[0].innerHTML = Title.value;
+                row.cells[1].innerHTML = Author.value;
+                row.cells[2].innerHTML = Email.value;
+                row.cells[2].innerHTML = Price.value;
+                row.cells[3].innerHTML = pub_date.value;
+                row.cells[4].innerHTML = Languages.value;
+
+                for(var i=0;i<3;i++){
+                    if(books_type[i].checked){
+                        row.cells[6].innerHTML = books_type[i].value;
+                        break;
+                    }
+                }
+                replace.value = "Edit";
+                document.getElementById('subm').removeAttribute("disabled");
+
+                Title.value = "";
+                Author.value = "";
+                Price.value = "";
+                pub_date.value = "";
+                Languages.value = "";
+               
+            }
+            var x = document.getElementsByName("type");
+            var i;
+            for (i = 0; i < x.length; i++) {
+            if (x[i].type == "radio") {
+            x[i].checked = false;
+            } }
+        }
+
+        validation.addEventListener('submit', validate)
+    </script>
+</body>
+
+</html>
