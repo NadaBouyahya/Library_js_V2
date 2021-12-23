@@ -56,7 +56,7 @@
 </div>
 <div class="the_table">
     <table id="my_table">
-        <tr>
+        <thead>
             <td>Title</td>
             <td>Author</td>
             <td>Email</td>
@@ -65,7 +65,10 @@
             <td>Language</td>
             <td>Type</td>
             <td>Control</td>
-        </tr>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
     </table>
 </div>
 </main>
@@ -78,9 +81,7 @@
         var Languages = validation.elements["language"];
         var books_type = validation.elements["type"];
         var pub_date = validation.elements["date"];
-        var table = document.getElementById("my_table"); 
-        var listBooks = [];
-        var list_temp = [];
+        var table = document.getElementById("tbody");
 
         class books {
                 constructor(title, author, email, price, date, language, type){
@@ -93,13 +94,40 @@
                     this.type = type
                 }
                 DétailOuvrage(){
-                    return "The work" + title + "is a" + type + "in" + language +"language, written by" + author + "and published on the" + date + ". The price of" +title+ " is" + price+ "Dhs. "
+                    return "The book " + this.title + " is a " + this.type + " in " + this.language +" language, written by " + this.author + " and published on the " + this.date + ". The price of" +this.title+ " is" + this.price+ " Dhs."
                 }
             }
 
+            var listBooks = [];
+            var list_temp = "";
+            list_temp = JSON.parse(localStorage.getItem("list"));
+
+            if (list_temp != null){
+                
+                for(i=0;i<list_temp.length;i++){
+                    var bookInfo = new books(list_temp[i].title, list_temp[i].author, list_temp[i].email, list_temp[i].price, list_temp[i].date, list_temp[i].language, list_temp[i].type)
+                    listBooks.push(bookInfo);
+                }
+            }
+
+        function fill (){
+            for(var i=0; i<listBooks.length; i++){
+            var tr = table.insertRow(-1);
+                tr.insertCell(0).innerHTML = listBooks[i].title;
+                tr.insertCell(1).innerHTML = listBooks[i].author;
+                tr.insertCell(2).innerHTML = listBooks[i].email;
+                tr.insertCell(3).innerHTML = listBooks[i].price;
+                tr.insertCell(4).innerHTML = listBooks[i].date;
+                tr.insertCell(5).innerHTML = listBooks[i].language;
+                tr.insertCell(6).innerHTML = listBooks[i].type;
+                tr.insertCell(7).innerHTML = "<input type='button' class='delete_btn' onclick='delete_row(this)' value='delete'><input type='button' class='edit_btn' onclick='edit_row(this)' value='Edit'>"
+            }
+        }
+        fill();
+        
         function validate(event) {
             event.preventDefault();
-            // error message vars
+            // error messages vars
             var errorTitle = document.getElementById('title_msg');
             var errorAuthor = document.getElementById('author_msg');
             var errorEmail = document.getElementById('email_msg');
@@ -235,30 +263,39 @@
 
             // add rows+cells to table
             if(form_ok==true){
-                var index = Languages.selectedIndex;
-                var book = new books(Title.value, Author.value, Email.value,Price.value, pub_date.value, Languages.options[index].value, books_type.value)
-                listBooks.push(book);
-                localStorage.setItem("listBooks", JSON.stringify(listBooks));
-                list_temp.push(JSON.parse(localStorage.getItem("listBooks")));
+                var temp_cell = "";
+                for (var i = 0; i < books_type.length; i++) {
+                    if (books_type[i].checked) {
+                        temp_cell = books_type[i].value;
+                    }
+            }
 
-                var tr = table.insertRow(-1);
-                tr.insertCell(0).innerHTML = Title.value;
-                tr.insertCell(1).innerHTML = Author.value;
-                tr.insertCell(2).innerHTML = Email.value;
-                tr.insertCell(3).innerHTML = Price.value;
-                tr.insertCell(4).innerHTML = pub_date.value;
+                var index = Languages.selectedIndex;
+                book = new books(Title.value, Author.value, Email.value, Price.value, pub_date.value, Languages.options[index].value, temp_cell);
+                listBooks.push(book);
+                localStorage.setItem("list", JSON.stringify(listBooks));
+                table.innerHTML="";
+                fill();
                 
-                tr.insertCell(5).innerHTML = Languages.options[index].value;
-                tr.insertCell(6).innerHTML = books_type.value;
-                tr.insertCell(7).innerHTML = "<input type='button' class='delete_btn' onclick='delete_row(this)' value='delete'><input type='button' class='edit_btn' onclick='edit_row(this)' value='Edit'>"
+                // var index = Languages.selectedIndex;
+                // var book = new books(Title.value, Author.value, Email.value,Price.value, pub_date.value, Languages.options[index].value, books_type.value)
+                // listBooks.push(book);
+               /* localStorage.setItem("listBooks", JSON.stringify(listBooks));
+                list_temp.push(JSON.parse(localStorage.getItem("listBooks")));*/
+
+                
+                
+                // tr.insertCell(5).innerHTML = Languages.options[index].value;
+                // tr.insertCell(6).innerHTML = books_type.value;
+                // tr.insertCell(7).innerHTML = "<input type='button' class='delete_btn' onclick='delete_row(this)' value='delete'><input type='button' class='edit_btn' onclick='edit_row(this)' value='Edit'>"
                 
                      // clear form after submit
-                Title.value = "";
-                Author.value = "";
-                Email.value = "";
-                Price.value = "";
-                pub_date.value = "";
-                Languages.value = "";
+                // Title.value = "";
+                // Author.value = "";
+                // Email.value = "";
+                // Price.value = "";
+                // pub_date.value = "";
+                // Languages.value = "";
             }
                
             }
