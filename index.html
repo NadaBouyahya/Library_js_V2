@@ -93,11 +93,12 @@
                     this.language = language
                     this.type = type
                 }
-                DétailOuvrage(){
+                bookDetails(){
                     return "The book " + this.title + " is a " + this.type + " in " + this.language +" language, written by " + this.author + " and published on the " + this.date + ". The price of" +this.title+ " is" + this.price+ " Dhs."
                 }
             }
 
+            //local storage
             var listBooks = [];
             var list_temp = "";
             list_temp = JSON.parse(localStorage.getItem("list"));
@@ -124,6 +125,14 @@
             }
         }
         fill();
+
+        function sortTable(){
+            listBooks.sort(function(a,b){
+                if(a.title < b.title){
+                    return -1;
+                }
+            })
+        }
         
         function validate(event) {
             event.preventDefault();
@@ -181,7 +190,7 @@
             }
 
             // Email
-        if(Email.value !==""){
+            if(Email.value !==""){
                 
                 if (regEmail.test(Email.value)){
                 errorEmail.innerHTML= "yay"
@@ -192,11 +201,11 @@
                 errorEmail.style.color = 'red';
             }
         
-        }
-        else{
+         }
+            else{
             errorEmail.innerHTML= "please fill email field"
             errorEmail.style.color = 'red';
-        }
+         }
 
             //price//
             if(Price.value !==""){
@@ -275,6 +284,7 @@
                 listBooks.push(book);
                 localStorage.setItem("list", JSON.stringify(listBooks));
                 table.innerHTML="";
+                sortTable()
                 fill();
                 
                 // var index = Languages.selectedIndex;
