@@ -71,6 +71,7 @@
 
         </tbody>
     </table>
+    <button id="print_btn" onclick="printTable()">print</button>
 </div>
 </main>
     <script>
@@ -390,8 +391,15 @@
             x[i].checked = false;
             } }
         }
+            function printTable(){
+                var tableDiv = document.getElementsByClassName("the_table")[0].innerHTML;
+                var bodyContent = document.body.innerHTML;
 
-        validation.addEventListener('submit', validate)
+                document.body.innerHTML = tableDiv;
+                window.print();
+                document.body.innerHTML = bodyContent;
+            }
+                validation.addEventListener('submit', validate)
     </script>
 </body>
 
