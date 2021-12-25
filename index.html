@@ -55,6 +55,7 @@
     </form>
 </div>
 <div class="the_table">
+    <p id="bookDetails"></p>
     <table id="my_table">
         <thead>
             <td>Title</td>
@@ -82,6 +83,7 @@
         var books_type = validation.elements["type"];
         var pub_date = validation.elements["date"];
         var table = document.getElementById("tbody");
+        var bookDetails = document.getElementById("bookDetails");
 
         class books {
                 constructor(title, author, email, price, date, language, type){
@@ -101,6 +103,7 @@
             //local storage
             var listBooks = [];
             var list_temp = "";
+
             list_temp = JSON.parse(localStorage.getItem("list"));
 
             if (list_temp != null){
@@ -277,11 +280,12 @@
                     if (books_type[i].checked) {
                         temp_cell = books_type[i].value;
                     }
-            }
+                }
             
-
+                
                 var index = Languages.selectedIndex;
                 book = new books(Title.value, Author.value, Email.value, Price.value, pub_date.value, Languages.options[index].value, temp_cell);
+                bookDetails.innerHTML = book.bookDetails();
                 listBooks.push(book);
                 localStorage.setItem("list", JSON.stringify(listBooks));
                 table.innerHTML="";
@@ -320,15 +324,19 @@
         // delete button
         function delete_row(replace){
             if(confirm("are you sure ?")){
-            var i = replace.parentNode.parentNode.rowIndex;
-            table.deleteRow(i);
+                var i = replace.parentNode.parentNode.rowIndex - 1;
+                listBooks.splice(i, 1);
+                sortTable();
+                localStorage.setItem("list", JSON.stringify(listBooks));
+                table.innerHTML = "";
+                fill();
             }
        
         }
 
         // Edit button
         function edit_row(replace){
-            var i = replace.parentNode.parentNode.rowIndex;
+            var i = replace.parentNode.parentNode.rowIndex - 1;
             var row = table.rows[i];
             if(replace.value=="Edit"){
                 Title.value = row.cells[0].innerHTML;
@@ -348,19 +356,23 @@
                 document.getElementById('subm').setAttribute("disabled","true");
             }
             else{
-                row.cells[0].innerHTML = Title.value;
-                row.cells[1].innerHTML = Author.value;
-                row.cells[2].innerHTML = Email.value;
-                row.cells[2].innerHTML = Price.value;
-                row.cells[3].innerHTML = pub_date.value;
-                row.cells[4].innerHTML = Languages.value;
+                listBooks[i].title = Title.value;
+                listBooks[i].author = Author.value;
+                listBooks[i].email = Email.value;
+                listBooks[i].price = Price.value;
+                listBooks[i].pub_date = pub_date.value;
+                listBooks[i].language = Languages.value;
                 
                 for(var i=0;i<3;i++){
                     if(books_type[i].checked){
-                        row.cells[6].innerHTML = books_type[i].value;
+                        listBooks[i].type = books_type[i].value;
                         break;
                     }
                 }
+                sortTable();
+                localStorage.setItem("list", JSON.stringify(listBooks));
+                table.innerHTML = "";
+                fill();
                 replace.value = "Edit";
                 document.getElementById('subm').removeAttribute("disabled");
 
