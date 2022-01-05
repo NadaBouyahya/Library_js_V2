@@ -195,18 +195,19 @@
 
             // Email
             if(Email.value !==""){
-                
                 if (regEmail.test(Email.value)){
                 errorEmail.innerHTML= "yay"
                 errorEmail.style.color = 'green';
             }
                 else{
+                form_ok = false;
                 errorEmail.innerHTML= "nop"
                 errorEmail.style.color = 'red';
             }
         
          }
             else{
+            form_ok = false;
             errorEmail.innerHTML= "please fill email field"
             errorEmail.style.color = 'red';
          }
@@ -290,7 +291,7 @@
                 listBooks.push(book);
                 localStorage.setItem("list", JSON.stringify(listBooks));
                 table.innerHTML="";
-                sortTable()
+                sortTable();
                 fill();
                 
                 // var index = Languages.selectedIndex;
