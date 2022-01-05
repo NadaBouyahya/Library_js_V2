@@ -112,6 +112,7 @@
                 for(i=0;i<list_temp.length;i++){
                     var bookInfo = new books(list_temp[i].title, list_temp[i].author, list_temp[i].email, list_temp[i].price, list_temp[i].date, list_temp[i].language, list_temp[i].type)
                     listBooks.push(bookInfo);
+                    sortTable();
                 }
             }
 
@@ -219,7 +220,10 @@
                     errorPrice.style.color = "green"
                 }
 
-                else(errorPrice.innerHTML="wrong format !")
+                else{
+                    errorPrice.innerHTML="wrong format !";
+                    form_ok = false;
+                }
             }
            else if (Price.value == "") {
                 form_ok = false;
@@ -362,6 +366,7 @@
                     }
                 }
                 replace.value = "Save";
+                // bookDetails.innerHTML= listBooks[i].bookDetails();
                 document.getElementById('subm').setAttribute("disabled","true");
             }
             else{
