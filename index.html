@@ -97,7 +97,7 @@
                     this.type = type
                 }
                 bookDetails(){
-                    return "The book " + this.title + " is a " + this.type + " in " + this.language +" language, written by " + this.author + " and published on the " + this.date + ". The price of " +this.title+ " is " + this.price+ " Dhs."
+                    return "The book " + this.title + " is a " + this.type + " in " + this.language +" language, written by " + this.author + " and published on the " + this.date + ". The price of" +this.title+ " is" + this.price+ " Dhs."
                 }
             }
 
@@ -305,6 +305,13 @@
                 // tr.insertCell(6).innerHTML = books_type.value;
                 // tr.insertCell(7).innerHTML = "<input type='button' class='delete_btn' onclick='delete_row(this)' value='delete'><input type='button' class='edit_btn' onclick='edit_row(this)' value='Edit'>"
                 
+                     // clear form after submit
+                // Title.value = "";
+                // Author.value = "";
+                // Email.value = "";
+                // Price.value = "";
+                // pub_date.value = "";
+                // Languages.value = "";
                     //  clear form after submit
                 Title.value = "";
                 Author.value = "";
@@ -376,13 +383,13 @@
                 fill();
                 replace.value = "Edit";
                 document.getElementById('subm').removeAttribute("disabled");
+
                 Title.value = "";
                 Author.value = "";
                 Email.value = "";
                 Price.value = "";
                 pub_date.value = "";
                 Languages.value = "";
-               
             }
             var x = document.getElementsByName("type");
             var i;
